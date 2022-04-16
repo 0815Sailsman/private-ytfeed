@@ -3,4 +3,4 @@ Provides subscriptions and access to Youtube videos and integrated media-player 
 
 Dependencies:
 * Scrapetube
-* 
+* Pysimplegui
