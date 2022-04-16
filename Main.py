@@ -17,7 +17,10 @@ vids = [[generate_frame_for_vid(videos[0], 0), generate_frame_for_vid(videos[1],
         [generate_frame_for_vid(videos[3], 3), generate_frame_for_vid(videos[4], 4), generate_frame_for_vid(videos[5], 5)],
         [generate_frame_for_vid(videos[6], 6), generate_frame_for_vid(videos[7], 7), generate_frame_for_vid(videos[8], 8)]]
 
-layout = [[subs, sg.VerticalSeparator(), vids]]
+layout = [[subs, sg.VerticalSeparator(),
+           vids
+           #sg.Button('', image_data=get_png_from_url("https://i.ytimg.com/vi/sgEn3Omab_Y/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAXL0VaLI_TCPL25T146oL0gMWSbQ"), key=("thumbnail"+str(0)))
+           ]]
 
 # Create the window
 window = sg.Window('Window Title', layout)
@@ -37,7 +40,7 @@ while True:
         videos = new_videos(mode="list")
         for i in range(9):
             window["vid"+str(i)].update(videos[i][0])
-            window["thumbnail"+str(i)].update(data=get_png_from_url(videos[i][3]))
+            window["thumbnail"+str(i)].update(image_data=get_png_from_url(videos[i][3]))
 
 # Finish up by removing from the screen
 window.close()

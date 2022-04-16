@@ -1,5 +1,6 @@
 import Scraper
 import io
+import base64
 import requests
 from PIL import Image
 import tempfile
@@ -57,17 +58,21 @@ def get_png_from_url(url):
         buffer.seek(0)
         i = Image.open(io.BytesIO(buffer.read()))
     buffer.close()
-    png_bio = io.BytesIO()
-    i.save(png_bio, format="PNG")
-    png_data = png_bio.getvalue()
-    return png_data
+
+    # png_bio = io.BytesIO()
+    # i.save(png_bio, format="PNG")
+    # png_data = png_bio.getvalue()
+
+    buffered = io.BytesIO()
+    i.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue())
+    return img_str
 
 
 def generate_Frame_layout_for_vid(vid, nr):
     frame_layout = [
-        [sg.Image(get_png_from_url(
-            vid[3]), key="thumbnail"+str(nr))],
-    ]
+        #[sg.Image(get_png_from_url(vid[3]), key="thumbnail"+str(nr))],
+        [sg.Button('', image_data=get_png_from_url(vid[3]), key=("thumbnail"+str(nr)))]]
     return frame_layout
 
 
