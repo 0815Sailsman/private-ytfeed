@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
 from tools import get_all_subs, new_videos, get_png_from_url, generate_frame_for_vid
+import os
+import subprocess
 
 
 # Get newest videos
@@ -13,14 +15,13 @@ subs = [
      sg.Button("Reload vids", key="reload-vids")]
 ]
 
+current_page = 0
 vids = [[generate_frame_for_vid(videos[0], 0), generate_frame_for_vid(videos[1], 1), generate_frame_for_vid(videos[2], 2)],
         [generate_frame_for_vid(videos[3], 3), generate_frame_for_vid(videos[4], 4), generate_frame_for_vid(videos[5], 5)],
         [generate_frame_for_vid(videos[6], 6), generate_frame_for_vid(videos[7], 7), generate_frame_for_vid(videos[8], 8)]]
 
-layout = [[subs, sg.VerticalSeparator(),
-           vids
-           #sg.Button('', image_data=get_png_from_url("https://i.ytimg.com/vi/sgEn3Omab_Y/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAXL0VaLI_TCPL25T146oL0gMWSbQ"), key=("thumbnail"+str(0)))
-           ]]
+layout = [[sg.Button("<-", key="prev"), sg.Button("->", key="next")],
+    [subs, sg.VerticalSeparator(),vids]]
 
 # Create the window
 window = sg.Window('Window Title', layout)
@@ -40,7 +41,25 @@ while True:
         videos = new_videos(mode="list")
         for i in range(9):
             window["vid"+str(i)].update(videos[i][0])
+            window["link"+str(i)].update(videos[i][2])
             window["thumbnail"+str(i)].update(image_data=get_png_from_url(videos[i][3]))
+    elif "thumbnail" in event:
+        link = window["link"+event[-1]].get()
+        # Now open new media-player instance playing this video
+        subprocess.Popen("vlc " + link, shell=True).wait()
+    elif event == "next":
+        current_page += 1
+        for i in range(current_page*9, (current_page*9)+9):
+            window["vid"+str(i % 9)].update(videos[i][0])
+            window["link" + str(i % 9)].update(videos[i][2])
+            window["thumbnail"+str(i % 9)].update(image_data=get_png_from_url(videos[i][3]))
+    elif event == "prev":
+        if current_page > 0:
+            current_page -= 1
+            for i in range(current_page * 9, (current_page * 9) + 9):
+                window["vid" + str(i % 9)].update(videos[i][0])
+                window["link" + str(i % 9)].update(videos[i][2])
+                window["thumbnail" + str(i % 9)].update(image_data=get_png_from_url(videos[i][3]))
 
 # Finish up by removing from the screen
 window.close()

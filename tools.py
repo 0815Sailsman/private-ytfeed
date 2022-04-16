@@ -71,7 +71,7 @@ def get_png_from_url(url):
 
 def generate_Frame_layout_for_vid(vid, nr):
     frame_layout = [
-        #[sg.Image(get_png_from_url(vid[3]), key="thumbnail"+str(nr))],
+        [sg.T(vid[2], visible=False, key="link"+str(nr))],
         [sg.Button('', image_data=get_png_from_url(vid[3]), key=("thumbnail"+str(nr)))]]
     return frame_layout
 

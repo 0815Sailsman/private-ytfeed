@@ -1,11 +1,11 @@
 import scrapetube
 
 
-def get_newest_videos_from_channel(channel_url, count=5):
+def get_newest_videos_from_channel(channel_url, count=10):
     videos = scrapetube.get_channel(channel_url=channel_url, limit=count)
     results = [(video["title"]["runs"][0]["text"],
                 convert_text_to_timestamp(video["publishedTimeText"]["simpleText"].split(" ", 1)[1]),
-                "https://www.youtube.com/watch/" + str(video["videoId"]),
+                "https://www.youtube.com/watch?v=" + str(video["videoId"]),
                 video["thumbnail"]["thumbnails"][1]["url"]) for video in videos]
     return results
 
