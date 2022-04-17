@@ -12,3 +12,8 @@ Features:
  * Watch the videos directly in the VLC-Media-Player
 
 ![Sample Screenshot](/screenshot-privateytfeed.PNG?raw=true "Sample Screenshot")
+
+TODO:
+  * Warnings when VLC is not in Path
+  * Simple guide how to add VLC to path
+  * Option to ship with portable version of VLC for easier installation
