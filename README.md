@@ -10,3 +10,5 @@ Your OS might warn you, that this is an executable that cant be trusted. Just cl
 Features:
  * Browse the latest videos of your favourite Youtubers without having to use a Google Account in order to subscribe to a channel.
  * Watch the videos directly in the VLC-Media-Player
+
+![Sample Screenshot](/screenshot-privateytfeed.PNG?raw=true "Sample Screenshot")
